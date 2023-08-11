@@ -1,2 +1,2 @@
 # react-currency-converter
-World Currency Converter using React.JS, HTML, CSS, Javascript.
+Currency Converter using React.JS, HTML, CSS, Javascript.
