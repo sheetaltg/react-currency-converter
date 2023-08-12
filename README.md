@@ -1,3 +1,6 @@
+
+![CurrencyConverter](https://github.com/sheetaltg/react-currency-converter/assets/14239770/9b55db01-02a8-4926-9523-28b19d660bb4)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
