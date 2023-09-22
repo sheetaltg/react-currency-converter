@@ -1,156 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="icon" href="./favicon/favicon.ico" />
-    <meta charset="UTF-8">    
-    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
-    <meta name="description" content="Currency Converter" />
-    <link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png" />    
-    <link rel="manifest" href="./favicon/site.webmanifest" />
-    <!--Design and Devoloped by Sheetal T Ganeshgudi-->
-    <title>React Currency Converter </title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=kUzTt8goWso5nDVW5932w1Z_V8EAbbMEPJyAtdZErpin2vfLI5WwNFVR9_QbDkerPpVpRAxWN9kxiqkbtMqIqcKY50J-SYh73KuEyYNJzpECjuQe-KKOCzYAlftx02juo38PosrBR-tv-FCR_pW9zSnSUccZ7O9X3i2zi7Yj5rkbyMexPtGYRjHpyPM-cSKy" charset="UTF-8"></script>
+  <link rel="icon" href="./favicon/favicon.ico" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="React Currency Converter" />
+
+  <link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="./favicon/site.webmanifest" />
+  <!--Design and Devoloped by Sheetal T Ganeshgudi-->
+  <script type="text/javascript"
+    src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=kUzTt8goWso5nDVW5932w1Z_V8EAbbMEPJyAtdZErpin2vfLI5WwNFVR9_QbDkerPpVpRAxWN9kxiqkbtMqIqcKY50J-SYh73KuEyYNJzpECjuQe-KKOCzYAlftx02juo38PosrBR-tv-FCR_pW9zSnSUccZ7O9X3i2zi7Yj5rkbyMexPtGYRjHpyPM-cSKy"
+    charset="UTF-8"></script>
+
+  <title>React Currency Converter </title>
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.js"></script>
+  <script src="./axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./stylesheet.css" />
 </head>
+
 <body>
-    <div id="root"></div>
-    <script src="./react.development.js"></script>
-    <script src="./react-dom.development.js"></script>
+  <div id="root"></div>  
+  <script type="text/babel">
+    const rootHandle = document.getElementById('root')
     
-    <script src="./babel.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="./stylesheet.css">
-
-    <script type="text/babel">
-        const rootHandle = document.getElementById('root')
-
-        //API Call
-        const BASE_URL = 'https://api.exchangerate.host/latest/' 
-        //const url='https://free.currconv.com/api/v7/convert?q=CAD_INR,USD_INR&compact=ultra&apiKey=5deaacc0d3ec9e5b3e87'
-        
-        const { useState, useEffect } = React
-
-function App() {
-
-          const [currencyOptions, setcurrencyOptions] = useState([])
-          const [fromCurrency, setFromCurrency] = useState()
-          const [toCurrency, setToCurrency] = useState() 
-          const [exchangeRate, setExchangeRate] = useState()
-          const [amount, setAmount] = useState(1)
-          const [amountInFromCurrency, setAmountInFromCurrency] = useState(true)
-          const [date, setDate] = useState()
-          // const [symbols, setSymbols] = useState()
-
-
-          // console.log(setDate);
-
-          let toAmount, fromAmount
-          if(amountInFromCurrency) {
-            fromAmount = amount
-            toAmount = (amount * exchangeRate).toFixed(2)
-          } else {
-            toAmount = amount
-            fromAmount = (amount / exchangeRate).toFixed(2)
-          }
-
-          console.log(setAmountInFromCurrency)
-          console.log(setAmount)
-          // console.log(exchangeRate)
-          //console.log(setDate)
-
-
-          // console.log(currencyOptions)
-
-useEffect(() => {
-  fetch(BASE_URL)
-  .then(res => res.json())
-  .then(data => {
+    const BASE_URL = 'https://api.apilayer.com/fixer'
     
-    const firstCurrency = Object.keys(data.rates)[66] // INR
-    setcurrencyOptions([data.base, ...Object.keys(data.rates)])
-    setFromCurrency(data.base)
-    setToCurrency(firstCurrency)
-    setExchangeRate(data.rates[firstCurrency])
-    // setDate((data.date).split("-").reverse().join("-"));
-    const date = ((data.date).split("-").reverse().join("-"));
-    setDate(date)
-    
-  })
-}, []) 
+    const { useState, useEffect } = React
 
-useEffect(() => {
-  if(fromCurrency != null && toCurrency != null) {
-    fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
-    .then(res => res.json())
-    .then(data => setExchangeRate(data.rates[toCurrency]))
-    console.log("fromCurrency", fromCurrency)
-    console.log("toCurrency", toCurrency)
-  }    
-}, [fromCurrency, toCurrency])
+    function App() {
 
-function handleFromAmountChange (e) {
-  setAmount(e.target.value)
-  setAmountInFromCurrency(true)
-}
+      const [currencyOptions, setCurrencyOptions] = useState([])
+      const [fromCurrency, setFromCurrency] = useState()
+      const [toCurrency, setToCurrency] = useState()
+      const [exchangeRate, setExchangeRate] = useState()
+      const [amount, setAmount] = useState(1)
+      const [amountInFromCurrency, setAmountInFromCurrency] = useState(true)
+      const [date, setDate] = useState()
+      const [fromCurrencyName, setFromCurrencyName] = useState()
+      const [toCurrencyName, setToCurrencyName] = useState()
+     
+      let toAmount, fromAmount
+      if (amountInFromCurrency) {
+        fromAmount = amount
+        toAmount = (amount * exchangeRate).toFixed(2)
+      } else {
+        toAmount = amount
+        fromAmount = (amount / exchangeRate).toFixed(2)
+      }     
 
-function handleToAmountChange (e) {
-  setAmount(e.target.value)
-  setAmountInFromCurrency(false)
-}
+      useEffect(() => {
+        axios.get('https://api.apilayer.com/fixer/latest?base=USD&apikey=VGwyV6NY818BPd8F8QiM9U2Xn81ufqHc') //LATEST ***
+          .then((response) => {
+            const result = response.data   
+            const firstCurrency = Object.keys(result.rates)[66]// [66] = INR                     
+            setCurrencyOptions((["USD", ...Object.keys(result.rates)]))
+            setFromCurrency("USD")      
+            setToCurrency(firstCurrency)
+            setExchangeRate(result.rates[firstCurrency].toFixed(4))
+            const date = ((result.date).split("-").reverse().join("-"));
+            setDate(date) 
+          })
+      }, [])
 
-return (
-  
-  <div className="container">
-    <form>
-    <h1>Currency Converter</h1> <br/>
-    <CurrencyRow 
-      currencyOptions={currencyOptions}
-      selectedCurrency={fromCurrency}
-      onChangeCurrency={e => setFromCurrency(e.target.value)} 
-    
-      onChangeAmount={handleFromAmountChange}
-      amount = {fromAmount}
-    />
-    <div className='equals'>=</div>
-    <CurrencyRow 
-      currencyOptions={currencyOptions}
-      selectedCurrency={toCurrency}
-      onChangeCurrency={e => setToCurrency(e.target.value)}
-      onChangeAmount={handleToAmountChange}
-      amount = {toAmount}
-    /> <br />
-    <p>Exchange Rate: <span>1</span> {fromCurrency} = <span> {exchangeRate} </span> {toCurrency} </p>
-<br />
-    <p>Updated on: {date} </p>
+      useEffect(() => {
+        axios.get('https://api.apilayer.com/fixer/symbols?apikey=VGwyV6NY818BPd8F8QiM9U2Xn81ufqHc') //SYMBOLS ***
+        .then((response) => {
+          const dataObj = response.data.symbols
+          const currObj = Object.entries(dataObj)
+          currObj.map(([key, val] = entry) => {
+            if(key == fromCurrency) {                     
+              setFromCurrencyName(val)
+            }  
+            if(key == toCurrency) {              
+              setToCurrencyName(val)
+            }                    
+          });
+        })
+      },[fromCurrency, toCurrency])
+      
+      useEffect(() => { // To get Exchange Rate ***       
+        if (fromCurrency != null && toCurrency != null) {
+          axios.get(`${BASE_URL}/convert?to=${toCurrency}&from=${fromCurrency}&amount=1&apikey=VGwyV6NY818BPd8F8QiM9U2Xn81ufqHc`)
+            .then((response) => {
+              const result = response.data                                      
+              setExchangeRate((result.result).toFixed(4))                         
+            })
+        } 
+      }, [fromCurrency, toCurrency])
 
-    </form>
-  </div>
-);
-}
+      function handleFromAmountChange(e) {
+        setAmount(e.target.value)
+        setAmountInFromCurrency(true)
+      }
 
-function CurrencyRow(props) {
-    const {
+      function handleToAmountChange(e) {
+        setAmount(e.target.value)
+        setAmountInFromCurrency(false)
+      }
+
+      function handleSwitch() {
+        setFromCurrency(toCurrency)
+        setToCurrency(fromCurrency)
+      }
+
+      return (
+        <div className="container">         
+          <form>
+            <h1> <img className="logo" src="./images/logo.png"></img> Currency Converter </h1> <br />
+
+            <CurrencyRow
+              currencyOptions={currencyOptions}
+              selectedCurrency={fromCurrency}
+              onChangeCurrency={e => setFromCurrency(e.target.value)}
+              onChangeAmount={handleFromAmountChange}
+              amount={fromAmount}
+            />
+
+            <a onClick={handleSwitch} >
+              <button className="glow-on-hover" type="button"> SWAP </button> 
+
+            </a>
+
+            <CurrencyRow
+              currencyOptions={currencyOptions}
+              selectedCurrency={toCurrency}
+              onChangeCurrency={e => setToCurrency(e.target.value)}
+              onChangeAmount={handleToAmountChange}
+              amount={toAmount}
+            /> <br />
+            <p>Exchange Rate: <br/> <br/>
+            <span>1</span> {fromCurrencyName} = <span> {exchangeRate} </span> {toCurrencyName} </p>
+            <p>Updated on: {date} </p>  
+            
+          </form>
+        </div>
+      );
+    }
+
+    function CurrencyRow(props) {
+      const {
         currencyOptions,
         selectedCurrency,
         onChangeCurrency,
         onChangeAmount,
         amount
-    } = props
-    return (
+      } = props
+      return (
         <div>
-            <input type="number" className='input' value={amount} onChange={onChangeAmount} min="1"/>
-            <select value={selectedCurrency} onChange={onChangeCurrency}>
-                {currencyOptions.map((option,i) => (
-                    <option key={i} value={option}> {option} </option>
-                ))}
-                
-            </select>
+         <input type="number" className='input' value={amount} onChange={onChangeAmount} min="1" />
+          <select value={selectedCurrency} onChange={onChangeCurrency}>
+            {currencyOptions.map((option, i) => (
+              <option key={i} value={option}> {option} </option>
+            ))}  
+          </select>           
         </div>
-    )
-}
-        ReactDOM.render(<App />, rootHandle)
-    </script>
-
+      )
+    }
+    ReactDOM.render(<App />, rootHandle)
+  </script>
 <!--Design and Devoloped by Sheetal T Ganeshgudi-->
+<!-- <script type="text/javascript" src="./script.js"></script> -->
 </body>
 </html>
